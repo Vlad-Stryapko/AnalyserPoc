@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LibWithAttribute\LibWithAttribute.csproj" />
     <ProjectReference Include="..\AnalyserPoc\AnalyserPoc.csproj" />
   </ItemGroup>
 

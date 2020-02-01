@@ -30,11 +30,17 @@ namespace AnalyserPoc
         {
             // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
+            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.Method);
         }
 
         private static void AnalyzeSymbol(SymbolAnalysisContext context)
         {
+            if (context.Symbol.Kind == SymbolKind.Method)
+            {
+                var attrs = context.Symbol.GetAttributes();
+                var attributeClasses = attrs.Select(_ => _.AttributeClass).ToList();
+            }
+
             // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
             var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
 

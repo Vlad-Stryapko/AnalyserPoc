@@ -1,3 +1,4 @@
+using LibWithAttribute;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -6,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime;
+using System.Runtime.Serialization;
 
 namespace TestHelper
 {
@@ -152,7 +155,12 @@ namespace TestHelper
                 .AddMetadataReference(projectId, CorlibReference)
                 .AddMetadataReference(projectId, SystemCoreReference)
                 .AddMetadataReference(projectId, CSharpSymbolsReference)
-                .AddMetadataReference(projectId, CodeAnalysisReference);
+                .AddMetadataReference(projectId, CodeAnalysisReference)
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(MyAttribute).Assembly.Location))
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(GCSettings).Assembly.Location))
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(Attribute).Assembly.Location))
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(DataContractAttribute).Assembly.Location))
+                ;
 
             int count = 0;
             foreach (var source in sources)
