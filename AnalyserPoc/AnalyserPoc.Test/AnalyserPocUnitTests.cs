@@ -25,14 +25,12 @@ namespace AnalyserPoc.Test
                 using System.Text;
                 using System.Threading.Tasks;
                 using System.Diagnostics;
+                using LibWithAttribute;
 
-                namespace ConsoleApplication1
-                {
-                    class TypeName
-                    {
+                namespace ConsoleApplication1 {
+                    class TypeName {
                         [My]
-                        public void Stuff()
-                        {
+                        public void Stuff() {
                         }
                     }
                 }";
