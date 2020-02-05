@@ -1,3 +1,5 @@
+using AnalyserPoc;
+using AnalyserPoc.Test;
 using LibWithAttribute;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -61,6 +63,7 @@ namespace TestHelper
             foreach (var project in projects)
             {
                 var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create(analyzer));
+
                 var diags = compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result;
                 foreach (var diag in diags)
                 {
@@ -160,7 +163,11 @@ namespace TestHelper
                 .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(GCSettings).Assembly.Location))
                 .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(Attribute).Assembly.Location))
                 .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(DataContractAttribute).Assembly.Location))
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(MySecondAttribute).Assembly.Location))
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(MyThirdAttribute).Assembly.Location))
                 ;
+
+            var m = MetadataReference.CreateFromFile(typeof(MyThirdAttribute).Assembly.Location);
 
             int count = 0;
             foreach (var source in sources)

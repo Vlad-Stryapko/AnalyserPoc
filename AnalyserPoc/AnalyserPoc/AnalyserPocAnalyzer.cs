@@ -10,6 +10,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace AnalyserPoc
 {
+    [AttributeUsage(AttributeTargets.All)]
+    public class MyThirdAttribute : Attribute { }
+
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class AnalyserPocAnalyzer : DiagnosticAnalyzer
     {

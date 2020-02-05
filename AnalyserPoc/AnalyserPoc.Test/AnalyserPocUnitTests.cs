@@ -12,6 +12,10 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AnalyserPoc.Test
 {
+
+    [AttributeUsage(AttributeTargets.All)]
+    public class MySecondAttribute : Attribute { }
+
     [TestClass]
     public class UnitTest : CodeFixVerifier
     {
@@ -25,15 +29,30 @@ namespace AnalyserPoc.Test
                 using System.Text;
                 using System.Threading.Tasks;
                 using System.Diagnostics;
+                using System.Runtime.Serialization;
+                using AnalyserPoc.Test;
+                using AnalyserPoc;
                 using LibWithAttribute;
 
                 namespace ConsoleApplication1 {
                     class TypeName {
+                        [MyThird]
+                        [MySecond]
                         [My]
                         public void Stuff() {
                         }
                     }
                 }";
+
+
+            var tree = CSharpSyntaxTree.ParseText(source);
+            var compilation = CSharpCompilation.Create("ConsoleApplication1")
+            .AddReferences(MetadataReference.CreateFromFile(typeof(string).Assembly.Location))
+            .AddReferences(MetadataReference.CreateFromFile(typeof(MyAttribute).Assembly.Location))
+            .AddSyntaxTrees(tree)
+            ;
+
+            var type = compilation.GetTypeByMetadataName("LibWithAttribute.MyAttribute"); //Named Type
 
             var expected = new DiagnosticResult
             {

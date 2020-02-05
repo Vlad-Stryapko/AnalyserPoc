@@ -2,6 +2,6 @@
 
 namespace LibWithAttribute
 {
-    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
-    public sealed class MyAttribute : Attribute { }
+    [AttributeUsage(AttributeTargets.All)]
+    public class MyAttribute : Attribute { }
 }
